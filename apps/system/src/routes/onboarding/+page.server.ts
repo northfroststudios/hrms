@@ -37,16 +37,41 @@ export const actions: Actions = {
 					.from('companies_logos')
 					.getPublicUrl(filePath);
 
-				const { error } = await supabase.from('companies').insert({
+				const { error: CompanyCreationError } = await supabase.from('companies').insert({
 					name: company_name,
 					code: GenerateCode(),
 					logo_url: publicUrlData?.publicUrl,
 					user_id: user?.id
 				});
 
-				if (error) {
+				if (CompanyCreationError) {
 					return fail(404, {
-						message: error.message
+						message: CompanyCreationError.message
+					});
+				}
+
+				const { data: companyData, error: companyFetchError } = await supabase
+					.from('companies')
+					.select('id')
+					.eq('user_id', user?.id)
+					.single<Company>();
+
+				if (companyFetchError || !companyData) {
+					return fail(404, {
+						message: 'Could not retrieve company ID'
+					});
+				}
+
+				const { error: membershipCreationError } = await supabase.from('memberships').insert({
+					company_id: companyData.id,
+					user_id: user?.id,
+					is_admin: true,
+					is_active:true
+				});
+
+				if (membershipCreationError) {
+					return fail(404, {
+						message: membershipCreationError.message
 					});
 				}
 			}
@@ -59,7 +84,7 @@ export const actions: Actions = {
 
 				if (CompanyData?.user_id === user?.id) {
 					return fail(404, {
-						message: "You cannot send a request to join a company you created."
+						message: 'You cannot send a request to join a company you created.'
 					});
 				}
 
@@ -69,11 +94,10 @@ export const actions: Actions = {
 					});
 				}
 
-				// FIX RLS Issue
 				const { error } = await supabase.from('join_requests').insert({
 					user_id: user?.id,
 					company_id: CompanyData.id,
-					from_admin:false
+					from_admin: false
 				});
 
 				if (error) {
@@ -81,6 +105,8 @@ export const actions: Actions = {
 						message: error.message
 					});
 				}
+
+				// let's display a success message when this is successful
 			}
 		} catch (error) {
 			console.log(error);
