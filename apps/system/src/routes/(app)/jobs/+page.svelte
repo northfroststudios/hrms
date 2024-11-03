@@ -14,7 +14,7 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
-	import { FolderSearch, MoveUpRight, Search, SlidersHorizontal } from 'lucide-svelte';
+	import { FolderSearch, Link, Search, SlidersHorizontal } from 'lucide-svelte';
 
 	type Jobs = Database['public']['Tables']['jobs']['Row'];
 
@@ -54,7 +54,7 @@
 				<button class="rounded border px-4 py-2 hover:bg-neutral-200">
 					<SlidersHorizontal class="size-4" />
 				</button>
-				<Dropdown>
+				<Dropdown class="py-0">
 					<DropdownItem>
 						<Radio name="example1" value="title" bind:group={filterParameter}>Search by title</Radio
 						>
@@ -68,7 +68,7 @@
 			</div>
 		</div>
 		<div>
-			<Button size="sm" href="/jobs/new">Add Listing</Button>
+			<Button size="xs" href="/jobs/new">Add Listing</Button>
 		</div>
 	</div>
 	{#if filteredListings && filteredListings.length > 0}
@@ -86,7 +86,7 @@
 						<TableBodyRow>
 							<TableBodyCell
 								><a href={`/jobs/${job.id}`} class="hover:text-primary-base flex items-center gap-1"
-									>{getFirstUUIDPart(job.id)}<MoveUpRight class="size-3" />
+									><Link class="size-2.5" />{getFirstUUIDPart(job.id)}
 								</a></TableBodyCell
 							>
 							<TableBodyCell>{job.title}</TableBodyCell>

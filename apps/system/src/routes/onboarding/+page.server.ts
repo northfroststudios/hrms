@@ -14,7 +14,7 @@ export async function load({ locals }) {
 	const { data: membership } = await supabase
 		.from('memberships')
 		.select('*')
-		.eq('user_id', user?.id)
+		.eq('user_id', user?.id!)
 		.single();
 
 	// Redirect the user to the dashboard if there's an existing membership (if the user is already in a company)
@@ -68,7 +68,7 @@ export const actions: Actions = {
 				const { data: companyData, error: companyFetchError } = await supabase
 					.from('companies')
 					.select('id')
-					.eq('user_id', user?.id)
+					.eq('user_id', user?.id!)
 					.single<Company>();
 
 				if (companyFetchError || !companyData) {

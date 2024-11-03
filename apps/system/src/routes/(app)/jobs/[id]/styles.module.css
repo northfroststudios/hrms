@@ -1,11 +1,16 @@
-.listing h1, 
-.listing h2, 
-.listing h3 {
-    font-weight: 600;
+.listing h1,
+.listing h2,
+.listing h3,
+.listing h4 {
+	font-weight: 600;
+	letter-spacing: -0.025em;
 }
-
+.listing p {
+	margin-top: 0.5em;
+	margin-bottom: 1em;
+}
 .listing ul {
-    list-style-type: disc;
-    display: inline-block;
-    margin-left: 30px !important;
+	list-style-type: disc;
+	display: inline-block;
+	margin-left: 30px !important;
 }

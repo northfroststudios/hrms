@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import RichText from '$lib/components/ui/rich-text.svelte';
+	import { fromBaseForm } from '$lib/utils.js';
 	import { Button, Input, Label, Spinner } from 'flowbite-svelte';
 
 	let isLoading = false;
@@ -20,20 +21,23 @@
 		field_errors = { ...field_errors, ...form.field_errors };
 	}
 
+    export let data;
+	$: ({ data: job_detail } = data.job_detail);
+
 	function handleRichTextChange(content: string) {
 		description = content;
 	}
 </script>
 
 <svelte:head>
-	<title>Create a Job Listing | HRMS</title>
+	<title>Edit a Job Listing | HRMS</title>
 </svelte:head>
 
 <section>
 	<div class="border-b p-3 lg:p-5">
-		<h2 class="font-semibold">Create a Job Posting</h2>
+		<h2 class="font-semibold">Edit a Job Posting</h2>
 	</div>
-	<div class="mx-auto max-w-screen-md px-8 py-10">
+	<div class="mx-auto max-w-screen-md px-8 py-16">
 		<form
 			use:enhance={() => {
 				isLoading = true;
@@ -50,7 +54,7 @@
 				<div>
 					<Label class="text-primary-700 space-y-2">
 						<span>Title</span>
-						<Input size="md" name="title" disabled={isLoading} />
+						<Input size="md" name="title" disabled={isLoading} value={job_detail?.title}/>
 					</Label>
 					{#if field_errors.title}
 						<small class="mt-2 text-sm text-red-500" id="title-error">{field_errors.title}</small>
@@ -59,7 +63,7 @@
 				<div>
 					<Label class="text-primary-700 space-y-2">
 						<span>Location</span>
-						<Input size="md" name="location" disabled={isLoading} />
+						<Input size="md" name="location" disabled={isLoading} value={job_detail?.location} />
 					</Label>
 					{#if field_errors.location}
 						<small class="mt-2 text-sm text-red-500" id="location-error"
@@ -69,8 +73,8 @@
 				</div>
 				<div>
 					<Label class="text-primary-700 space-y-2">
-						<span>Monthly Compensation</span>
-						<Input size="md" name="compensation" disabled={isLoading} />
+						<span>Compensation</span>
+						<Input size="md" name="compensation" disabled={isLoading} value={fromBaseForm(job_detail?.compensation!)} />
 					</Label>
 					{#if field_errors.compensation}
 						<small class="mt-2 text-sm text-red-500" id="compensation-error"
@@ -86,9 +90,9 @@
 					<Label class="text-primary-700">
 						<span>Description</span>
 					</Label>
-					<RichText value={description} onChange={handleRichTextChange} />
+					<RichText value={job_detail?.description} onChange={handleRichTextChange} />
 					<!-- Add a hidden input to include the content in the form submission -->
-					<Input type="hidden" name="description" value={description} />
+					<Input type="hidden" name="description" value={job_detail?.description} />
 					{#if field_errors.description}
 						<small class="mt-2 text-sm text-red-500" id="description-error"
 							>{field_errors.description}</small
@@ -101,7 +105,7 @@
 				{#if isLoading}
 					<Spinner class="mr-3" size="4" color="white" />
 				{/if}
-				{isLoading ? 'Creating Listing...' : 'Create Listing'}
+				{isLoading ? 'Editing Listing...' : 'Edit Listing'}
 			</Button>
 		</form>
 	</div>

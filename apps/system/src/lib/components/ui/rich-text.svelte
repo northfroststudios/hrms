@@ -1,20 +1,21 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
 	import { Editor } from '@tiptap/core';
-	import StarterKit from '@tiptap/starter-kit';
-	import Underline from '@tiptap/extension-underline';
-	import Link from '@tiptap/extension-link';
 	import HardBreak from '@tiptap/extension-hard-break';
+	import Link from '@tiptap/extension-link';
+	import Underline from '@tiptap/extension-underline';
+	import StarterKit from '@tiptap/starter-kit';
 	import {
 		Bold,
+		Heading,
 		Italic,
-		Underline as UnderlineIcon,
-		List,
 		Link as LinkIcon,
-		Heading1,
-		Heading2,
-		Heading3
+		List,
+		Underline as UnderlineIcon
 	} from 'lucide-svelte';
+	import { onDestroy, onMount } from 'svelte';
+
+	export let value = '';
+	export let onChange = (content: string) => {};
 
 	let element: HTMLDivElement | null = null;
 	let editor: Editor | null = null;
@@ -24,10 +25,9 @@
 			editor = new Editor({
 				element: element,
 				extensions: [
-					StarterKit,
-					HardBreak.configure({
-						HTMLAttributes: {
-							class: 'break-line'
+					StarterKit.configure({
+						hardBreak: {
+							keepMarks: true
 						}
 					}),
 					Underline,
@@ -35,14 +35,18 @@
 						openOnClick: true
 					})
 				],
-				content: '',
+				content: value,
 				editorProps: {
 					attributes: {
-						class: 'prose prose-sm sm:prose lg:prose-lg focus:outline-none'
+						class: 'prose prose-sm focus:outline-none min-h-[300px] leading-normal p-2'
 					}
 				},
 				onTransaction: () => {
 					editor = editor;
+				},
+				onUpdate({ editor }) {
+					const content = editor.getHTML();
+					onChange(content);
 				}
 			});
 		}
@@ -56,30 +60,14 @@
 </script>
 
 {#if editor}
-	<div class="mb-2 flex gap-2">
+	<div class="mb-2 flex gap-2 rounded-lg border px-2 py-1">
 		<button
 			type="button"
-			on:click={() => editor?.chain().focus().toggleHeading({ level: 1 }).run()}
+			on:click={() => editor?.chain().focus().toggleHeading({ level: 4 }).run()}
 			class="rounded bg-gray-200 px-2 py-1 text-sm text-gray-800 transition-colors duration-300 hover:bg-gray-300"
-			class:active={editor.isActive('heading', { level: 1 })}
+			class:active={editor.isActive('heading', { level: 4 })}
 		>
-			<Heading1 class="size-4" />
-		</button>
-		<button
-			type="button"
-			on:click={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}
-			class="rounded bg-gray-200 px-2 py-1 text-sm text-gray-800 transition-colors duration-300 hover:bg-gray-300"
-			class:active={editor.isActive('heading', { level: 2 })}
-		>
-			<Heading2 class="size-4" />
-		</button>
-		<button
-			type="button"
-			on:click={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}
-			class="rounded bg-gray-200 px-2 py-1 text-sm text-gray-800 transition-colors duration-300 hover:bg-gray-300"
-			class:active={editor.isActive('heading', { level: 3 })}
-		>
-			<Heading3 class="size-4" />
+			<Heading class="size-4" />
 		</button>
 		<button
 			type="button"
@@ -117,7 +105,7 @@
 			type="button"
 			on:click={() => {
 				const url = prompt('Enter the URL:');
-				if (url) editor?.chain().focus().setLink({ href: url }).run();
+				if (url) editor?.chain().focus().setLink({ href: url, target: '_blank' }).run();
 			}}
 			class="rounded bg-gray-200 px-2 py-1 text-sm text-gray-800 transition-colors duration-300 hover:bg-gray-300"
 			class:active={editor.isActive('link')}
@@ -129,5 +117,5 @@
 
 <div
 	bind:this={element}
-	class="min-h-[250px] rounded-lg border border-gray-300 bg-[#f9fafb] p-2"
+	class="h-[300px] overflow-y-scroll rounded-lg border border-gray-300 bg-[#f9fafb] p-2"
 ></div>
