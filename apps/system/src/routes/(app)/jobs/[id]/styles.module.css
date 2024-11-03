@@ -1,0 +1,11 @@
+.listing h1, 
+.listing h2, 
+.listing h3 {
+    font-weight: 600;
+}
+
+.listing ul {
+    list-style-type: disc;
+    display: inline-block;
+    margin-left: 30px !important;
+}

@@ -4,9 +4,24 @@ import { ZodError } from 'zod';
 import type { Actions } from './$types';
 import { GenerateCode } from '$lib/utils';
 import { supabase } from '$lib/supabase/client';
-import type { Database } from '$lib/database.types';
+import type { Database } from '$lib/supabase/database.types';
 
 type Company = Database['public']['Tables']['companies']['Row'];
+
+export async function load({ locals }) {
+	const { user } = locals;
+
+	const { data: membership } = await supabase
+		.from('memberships')
+		.select('*')
+		.eq('user_id', user?.id)
+		.single();
+
+	// Redirect the user to the dashboard if there's an existing membership (if the user is already in a company)
+	if (membership) {
+		throw redirect(302, '/');
+	}
+}
 
 export const actions: Actions = {
 	default: async ({ request, locals }) => {
@@ -66,7 +81,7 @@ export const actions: Actions = {
 					company_id: companyData.id,
 					user_id: user?.id,
 					is_admin: true,
-					is_active:true
+					is_active: true
 				});
 
 				if (membershipCreationError) {

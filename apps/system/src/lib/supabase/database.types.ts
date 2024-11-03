@@ -39,28 +39,113 @@ export type Database = {
         }
         Relationships: []
       }
+      jobs: {
+        Row: {
+          company_id: string
+          compensation: number
+          created_at: string
+          description: string
+          id: string
+          is_published: boolean
+          location: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          company_id: string
+          compensation: number
+          created_at?: string
+          description: string
+          id?: string
+          is_published?: boolean
+          location?: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          company_id?: string
+          compensation?: number
+          created_at?: string
+          description?: string
+          id?: string
+          is_published?: boolean
+          location?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jobs_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       join_requests: {
         Row: {
           company_id: string
           created_at: string
+          from_admin: boolean
           id: string
           user_id: string
         }
         Insert: {
           company_id: string
           created_at?: string
+          from_admin: boolean
           id?: string
           user_id?: string
         }
         Update: {
           company_id?: string
           created_at?: string
+          from_admin?: boolean
           id?: string
           user_id?: string
         }
         Relationships: [
           {
             foreignKeyName: "join_requests_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      memberships: {
+        Row: {
+          company_id: string
+          created_at: string
+          id: number
+          is_active: boolean
+          is_admin: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          id?: number
+          is_active?: boolean
+          is_admin?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          id?: number
+          is_active?: boolean
+          is_admin?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "memberships_company_id_fkey"
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
