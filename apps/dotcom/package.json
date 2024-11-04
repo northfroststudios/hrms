@@ -1,5 +1,5 @@
 {
-	"name": "system",
+	"name": "dotcom",
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
@@ -26,7 +26,7 @@
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.36.0",
 		"flowbite": "^2.5.2",
-		"flowbite-svelte": "^0.47.2",
+		"flowbite-svelte": "^0.47.3",
 		"globals": "^15.0.0",
 		"prettier": "^3.3.2",
 		"prettier-plugin-svelte": "^3.2.6",
@@ -40,18 +40,6 @@
 		"vitest": "^2.0.4"
 	},
 	"dependencies": {
-		"@supabase/ssr": "^0.5.1",
-		"@supabase/supabase-js": "^2.46.0",
-		"@tiptap/core": "^2.9.1",
-		"@tiptap/extension-link": "^2.9.1",
-		"@tiptap/extension-underline": "^2.9.1",
-		"@tiptap/pm": "^2.9.1",
-		"@tiptap/starter-kit": "^2.9.1",
-		"clsx": "^2.1.1",
-		"cmdk-sv": "^0.0.18",
-		"lucide-svelte": "^0.454.0",
-		"supabase": "^1.207.9",
-		"svelte-tiptap": "^2.0.2",
-		"zod": "^3.23.8"
+		"lucide-svelte": "^0.454.0"
 	}
 }

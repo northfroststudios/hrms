@@ -20,7 +20,7 @@ export const actions = {
 			const { title, description, compensation, location } =
 				CreateJobListingSchema.parse(formEntries);
 
-			const { data,error } = await supabase
+			const { error } = await supabase
 				.from('jobs')
 				.update({
 					title,
@@ -30,8 +30,6 @@ export const actions = {
 					is_published: false
 				})
 				.eq('id', params.id);
-
-				console.log(formEntries,data)
 
 			if (error) {
 				return fail(404, {

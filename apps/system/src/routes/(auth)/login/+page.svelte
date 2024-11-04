@@ -28,7 +28,7 @@
 	<div class="w-full py-16">
 		<div class="mx-auto max-w-lg space-y-5 px-6">
 			<div>
-				<h3 class="styled-heading text-2xl font-semibold text-primary-700">Welcome back!</h3>
+				<h3 class="styled-heading text-2xl font-bold text-primary-700 tracking-tight">Welcome back!</h3>
 				<p class="mt-2 text-neutral-500">Log in to continue to HRMS</p>
 			</div>
 			{#if message}

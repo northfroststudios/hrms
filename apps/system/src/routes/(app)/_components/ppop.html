@@ -1,0 +1,97 @@
+<div class="min-h-screen bg-gray-50/50">
+    <div class="p-4 sm:p-6 lg:p-8">
+      <!-- Header -->
+      <div class="sm:flex sm:items-center sm:justify-between mb-8">
+        <div>
+          <h1 class="text-2xl font-semibold text-gray-900">HR Dashboard</h1>
+          <p class="mt-2 text-sm text-gray-700">Manage your workforce and HR operations</p>
+        </div>
+        <div class="mt-4 sm:mt-0">
+          <button class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <UserPlus class="h-4 w-4 mr-2" />
+            Add Employee
+          </button>
+        </div>
+      </div>
+  
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {#each stats as { title, value, trend, color, icon }}
+          <div class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between">
+              <p class="text-sm font-medium text-gray-600">{title}</p>
+              <svelte:component this={icon} class="h-5 w-5 text-gray-400" />
+            </div>
+            <div class="mt-2 flex items-baseline justify-between">
+              <p class="text-2xl font-semibold {color}">{value}</p>
+              <span class="bg-green-100 text-green-800 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium">
+                {trend}
+              </span>
+            </div>
+          </div>
+        {/each}
+      </div>
+  
+      <!-- Main Content -->
+      <div class="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <!-- Activity Feed -->
+        <div class="lg:col-span-2 bg-white rounded-lg shadow-sm p-6">
+          <h2 class="text-lg font-medium text-gray-900 mb-4">Recent Activity</h2>
+          <div class="flow-root">
+            <ul class="-mb-8">
+              {#each recentActivity as { user, action, time, icon }}
+                <li class="relative pb-8">
+                  <div class="relative flex space-x-3">
+                    <div class="h-8 w-8 bg-blue-500 rounded-full flex items-center justify-center ring-8 ring-white">
+                      <svelte:component this={icon} class="h-5 w-5 text-white" />
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <div class="text-sm text-gray-500">
+                        <span class="font-medium text-gray-900">{user}</span> {action}
+                      </div>
+                      <p class="text-sm text-gray-400">{time}</p>
+                    </div>
+                  </div>
+                </li>
+              {/each}
+            </ul>
+          </div>
+        </div>
+  
+        <!-- Quick Actions -->
+        <div class="bg-white rounded-lg shadow-sm p-6">
+          <h2 class="text-lg font-medium text-gray-900 mb-4">HR Actions</h2>
+          <div class="space-y-3">
+            <button class="w-full flex items-center justify-between px-4 py-3 text-left text-sm font-medium text-gray-700 bg-gray-50 rounded-md hover:bg-gray-100">
+              <span class="flex items-center">
+                <UserPlus class="h-5 w-5 mr-3 text-gray-400" />
+                New Employee Onboarding
+              </span>
+              <ChevronRight class="h-5 w-5 text-gray-400" />
+            </button>
+            <button class="w-full flex items-center justify-between px-4 py-3 text-left text-sm font-medium text-gray-700 bg-gray-50 rounded-md hover:bg-gray-100">
+              <span class="flex items-center">
+                <Calendar class="h-5 w-5 mr-3 text-gray-400" />
+                Time Off Requests
+              </span>
+              <ChevronRight class="h-5 w-5 text-gray-400" />
+            </button>
+            <button class="w-full flex items-center justify-between px-4 py-3 text-left text-sm font-medium text-gray-700 bg-gray-50 rounded-md hover:bg-gray-100">
+              <span class="flex items-center">
+                <GraduationCap class="h-5 w-5 mr-3 text-gray-400" />
+                Training Programs
+              </span>
+              <ChevronRight class="h-5 w-5 text-gray-400" />
+            </button>
+            <button class="w-full flex items-center justify-between px-4 py-3 text-left text-sm font-medium text-gray-700 bg-gray-50 rounded-md hover:bg-gray-100">
+              <span class="flex items-center">
+                <FileCheck class="h-5 w-5 mr-3 text-gray-400" />
+                Performance Reviews
+              </span>
+              <ChevronRight class="h-5 w-5 text-gray-400" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

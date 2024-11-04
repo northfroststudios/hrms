@@ -5,7 +5,7 @@
 		Button,
 		Dropdown,
 		DropdownItem,
-		Input,
+		Search,
 		Radio,
 		Table,
 		TableBody,
@@ -14,7 +14,7 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
-	import { FolderSearch, Link, Search, SlidersHorizontal } from 'lucide-svelte';
+	import { FolderSearch, Link,  SlidersHorizontal } from 'lucide-svelte';
 
 	type Jobs = Database['public']['Tables']['jobs']['Row'];
 
@@ -41,15 +41,13 @@
 	</div>
 	<div class="my-5 flex items-center justify-between px-5 py-2.5">
 		<div class="flex w-[60%] items-center gap-5 lg:w-[40%]">
-			<Input
+			<Search
 				type="search"
 				id="first_name"
 				placeholder="Search for a listing"
 				size="md"
 				bind:value={searchQuery}
-			>
-				<Search slot="left" class="h-4 w-4" />
-			</Input>
+			/>
 			<div>
 				<button class="rounded border px-4 py-2 hover:bg-neutral-200">
 					<SlidersHorizontal class="size-4" />

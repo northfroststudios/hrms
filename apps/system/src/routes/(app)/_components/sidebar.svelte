@@ -4,6 +4,7 @@
 	import { Dropdown, DropdownItem } from 'flowbite-svelte';
 	import { Puzzle, Menu, X } from 'lucide-svelte';
 	import { NAV_LINKS } from './sidebar-links';
+	import Cmd from './cmd.svelte';
 
 	export let user = {
 		full_name: '',
@@ -17,7 +18,7 @@
 	}
 </script>
 
-<div class="flex flex-col overflow-y-scroll border-b bg-[#fdfdfd] p-3 lg:h-full lg:border-r">
+<div class="flex flex-col overflow-y-scroll p-3 lg:h-full">
 	<div class="space-y-5">
 		<div class="flex items-center justify-between gap-2 lg:block">
 			<div class="bg-primary-700 w-fit rounded-lg p-2">
@@ -26,6 +27,9 @@
 			<button on:click={toggleMenu} class="block lg:hidden">
 				<Menu class="stroke-primary-base" />
 			</button>
+		</div>
+		<div>
+			<Cmd/>
 		</div>
 		<div class="hidden space-y-5 lg:block">
 			{#each NAV_LINKS as link}
@@ -70,7 +74,7 @@
 	<div class="hidden w-full lg:mt-auto lg:block">
 		<div class="mt-2 w-full">
 			<button
-				class="relative flex w-full items-center gap-2 rounded bg-stone-100 p-2 transition-colors hover:bg-stone-200"
+				class=" flex w-full items-center gap-2 rounded-md border bg-white p-2 transition-colors hover:bg-stone-50"
 			>
 				<img
 					src="https://api.dicebear.com/9.x/open-peeps/svg?seed={user.full_name}"
@@ -78,7 +82,7 @@
 					class="bg-primary-500 size-8 shrink-0 rounded shadow"
 				/>
 				<div class="text-start">
-					<span class="block text-sm font-semibold">{user.full_name}</span>
+					<span class="block text-xs font-semibold">{user.full_name}</span>
 					<span class="block text-xs text-stone-500">{user.company_name}</span>
 				</div>
 			</button>

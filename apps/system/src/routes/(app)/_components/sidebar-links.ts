@@ -1,5 +1,6 @@
 import {
 	BriefcaseBusiness,
+	Building2,
 	ChartArea,
 	ChartPie,
 	LayoutDashboard,
@@ -41,7 +42,12 @@ export const NAV_LINKS = [
 				name: 'Employees',
 				href: '/employees',
 				icon: Users
-			}
+			},
+			{
+				name: 'Departments',
+				href: '/departments',
+				icon: Building2
+			},
 		]
 	},
 	{

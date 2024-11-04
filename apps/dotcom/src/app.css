@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+html {
+	font-family:
+		'Inter',
+		-apple-system,
+		BlinkMacSystemFont,
+		system-ui,
+		sans-serif;
+	font-weight: 400;
+	line-height: 1.6;
+	font-size: 16px;
+	font-style: normal;
+	letter-spacing: -0.011em;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-optical-sizing: auto;
+}
+
+.heading {
+	font-family: 'Lora', serif;
+	font-weight: 300;
+}
