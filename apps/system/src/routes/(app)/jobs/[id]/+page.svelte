@@ -19,9 +19,19 @@
 </svelte:head>
 
 <section>
-	<div class="border-b p-3 lg:p-5">
-		<h2 class="font-bold lg:text-xl tracking-tight">Job Details</h2>
-	</div>
+	<nav class="p-5" aria-label="Breadcrumb">
+		<ol class="flex items-center space-x-2">
+			<li>
+				<a href="/jobs" class="text-sm font-medium text-gray-500 hover:text-gray-700">Jobs</a>
+			</li>
+			<li>
+				<span class="text-sm font-medium text-gray-500">/</span>
+			</li>
+			<li>
+				<span class="text-sm font-medium text-gray-500">{job_detail?.title}</span>
+			</li>
+		</ol>
+	</nav>
 	<div class="mx-auto max-w-screen-lg px-5 py-10">
 		<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
 			<div>
@@ -37,7 +47,7 @@
 				<div class="flex items-center gap-5">
 					<div class="flex items-center gap-2">
 						<Clock class="size-4 stroke-neutral-500" />
-						<span class="text-sm text-neutral-500">{getTimeAgo(job_detail?.created_at!)} ago</span>
+						<span class="text-sm text-neutral-500">{getTimeAgo(job_detail?.created_at!)}</span>
 					</div>
 					<div class="flex items-center gap-2">
 						<MapPin class="size-4 stroke-neutral-500" />

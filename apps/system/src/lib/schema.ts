@@ -83,5 +83,9 @@ export const CreateJobListingSchema = z.object({
 				invalid_type_error: 'Compensation must be a valid number'
 			})
 			.min(1, { message: 'Compensation must be at least 1' })
-	)
+	),
+	job_type: z.enum(['fulltime', 'parttime', 'internship', 'contract', 'volunteer'], {
+		required_error: 'Job type is required',
+		invalid_type_error: 'Invalid job type selected'
+	})
 });

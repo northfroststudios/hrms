@@ -1,11 +1,11 @@
 export const GenerateCode = () => {
-	let char1 = String.fromCharCode(97 + Math.floor(Math.random() * 26));
-	let char2 = String.fromCharCode(97 + Math.floor(Math.random() * 26));
+	const char1 = String.fromCharCode(97 + Math.floor(Math.random() * 26));
+	const char2 = String.fromCharCode(97 + Math.floor(Math.random() * 26));
 
-	let int1 = Math.floor(Math.random() * 10);
-	let int2 = Math.floor(Math.random() * 10);
+	const int1 = Math.floor(Math.random() * 10);
+	const int2 = Math.floor(Math.random() * 10);
 
-	let randomCode = char1 + char2 + int1 + int2;
+	const randomCode = char1 + char2 + int1 + int2;
 
 	const code = randomCode.toString().toUpperCase();
 	return code;
@@ -21,13 +21,13 @@ export function getTimeAgo(dateString: string): string {
 		return `${timeDifferenceInSeconds}s`;
 	} else if (timeDifferenceInSeconds < 3600) {
 		const minutes = Math.floor(timeDifferenceInSeconds / 60);
-		return `${minutes}m`;
+		return `${minutes}m ago`;
 	} else if (timeDifferenceInSeconds < 86400) {
 		const hours = Math.floor(timeDifferenceInSeconds / 3600);
-		return `${hours}h`;
+		return `${hours}h ago`;
 	} else if (timeDifferenceInSeconds < 2592000) {
 		const days = Math.floor(timeDifferenceInSeconds / 86400);
-		return `${days}d`;
+		return `${days}d ago`;
 	} else {
 		// If it's been more than a month, switch to an absolute date format
 		const options: Intl.DateTimeFormatOptions = {
@@ -38,7 +38,6 @@ export function getTimeAgo(dateString: string): string {
 		return pastDate.toLocaleDateString(undefined, options);
 	}
 }
-
 
 /**
  * Converts an amount of money to its base form.
@@ -60,7 +59,6 @@ export function fromBaseForm(amountInBaseForm: number, factor: number = 100): nu
 	return amountInBaseForm / factor;
 }
 
-
 export function getFirstUUIDPart(uuid: string): string {
-  return uuid.split("-")[0];
+	return uuid.split('-')[0];
 }

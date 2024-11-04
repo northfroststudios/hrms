@@ -17,7 +17,7 @@ export const actions = {
 		const formEntries = Object.fromEntries(form);
 
 		try {
-			const { title, description, compensation, location } =
+			const { title, description, compensation, location, job_type } =
 				CreateJobListingSchema.parse(formEntries);
 
 			const { error } = await supabase
@@ -27,6 +27,7 @@ export const actions = {
 					description,
 					compensation: toBaseForm(compensation),
 					location,
+					type: job_type,
 					is_published: false
 				})
 				.eq('id', params.id);

@@ -9,6 +9,38 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      activity_logs: {
+        Row: {
+          action: string
+          company_id: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          action: string
+          company_id: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          action?: string
+          company_id?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activity_logs_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       companies: {
         Row: {
           code: string
@@ -49,6 +81,7 @@ export type Database = {
           is_published: boolean
           location: string
           title: string
+          type: Database["public"]["Enums"]["Job Type"]
           user_id: string
         }
         Insert: {
@@ -60,6 +93,7 @@ export type Database = {
           is_published?: boolean
           location?: string
           title: string
+          type?: Database["public"]["Enums"]["Job Type"]
           user_id: string
         }
         Update: {
@@ -71,6 +105,7 @@ export type Database = {
           is_published?: boolean
           location?: string
           title?: string
+          type?: Database["public"]["Enums"]["Job Type"]
           user_id?: string
         }
         Relationships: [
@@ -161,7 +196,12 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      "Job Type":
+        | "internship"
+        | "contract"
+        | "fulltime"
+        | "volunteer"
+        | "parttime"
     }
     CompositeTypes: {
       [_ in never]: never

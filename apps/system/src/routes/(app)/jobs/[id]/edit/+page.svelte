@@ -2,7 +2,8 @@
 	import { enhance } from '$app/forms';
 	import RichText from '$lib/components/ui/rich-text.svelte';
 	import { fromBaseForm } from '$lib/utils.js';
-	import { Button, Input, Label, Spinner } from 'flowbite-svelte';
+	import { Button, Input, Label, Spinner, Select } from 'flowbite-svelte';
+	import ErrorNotice from '../../../../(auth)/_components/error-notice.svelte';
 
 	let isLoading = false;
 	let description = '';
@@ -13,7 +14,8 @@
 		title: null,
 		location: null,
 		compensation: null,
-		description: null
+		description: null,
+		job_type: null
 	};
 
 	$: if (form) {
@@ -21,7 +23,7 @@
 		field_errors = { ...field_errors, ...form.field_errors };
 	}
 
-    export let data;
+	export let data;
 	$: ({ data: job_detail } = data.job_detail);
 
 	function handleRichTextChange(content: string) {
@@ -34,10 +36,25 @@
 </svelte:head>
 
 <section>
-	<div class="border-b p-3 lg:p-5">
-		<h2 class="font-semibold">Edit a Job Posting</h2>
-	</div>
-	<div class="mx-auto max-w-screen-md px-8 py-16">
+	<nav class="p-5" aria-label="Breadcrumb">
+		<ol class="flex items-center space-x-2">
+			<li>
+				<a href="/jobs" class="text-sm font-medium text-gray-500 hover:text-gray-700">Jobs</a>
+			</li>
+			<li>
+				<span class="text-sm font-medium text-gray-500">/</span>
+			</li>
+			<li>
+				<span class="text-sm font-medium text-gray-500">Edit: {job_detail?.title}</span>
+			</li>
+		</ol>
+	</nav>
+	<div class="mx-auto max-w-screen-md px-8 py-8">
+		{#if message}
+			<div class="mb-5">
+				<ErrorNotice error={message} />
+			</div>
+		{/if}
 		<form
 			use:enhance={() => {
 				isLoading = true;
@@ -54,7 +71,7 @@
 				<div>
 					<Label class="text-primary-700 space-y-2">
 						<span>Title</span>
-						<Input size="md" name="title" disabled={isLoading} value={job_detail?.title}/>
+						<Input size="md" name="title" disabled={isLoading} value={job_detail?.title} />
 					</Label>
 					{#if field_errors.title}
 						<small class="mt-2 text-sm text-red-500" id="title-error">{field_errors.title}</small>
@@ -74,11 +91,33 @@
 				<div>
 					<Label class="text-primary-700 space-y-2">
 						<span>Compensation</span>
-						<Input size="md" name="compensation" disabled={isLoading} value={fromBaseForm(job_detail?.compensation!)} />
+						<Input
+							size="md"
+							name="compensation"
+							disabled={isLoading}
+							value={fromBaseForm(job_detail?.compensation!)}
+						/>
 					</Label>
 					{#if field_errors.compensation}
 						<small class="mt-2 text-sm text-red-500" id="compensation-error"
 							>{field_errors.compensation}</small
+						>
+					{/if}
+				</div>
+				<div>
+					<Label class="text-primary-700 space-y-2">
+						<span>Job Type</span>
+						<Select name="job_type" class="mt-1 block w-full" disabled={isLoading}>
+							<option value="fulltime">Full-time</option>
+							<option value="parttime">Part-time</option>
+							<option value="internship">Internship</option>
+							<option value="contract">Contract</option>
+							<option value="volunteer">Volunteer</option>
+						</Select>
+					</Label>
+					{#if field_errors.job_type}
+						<small class="mt-2 text-sm text-red-500" id="job_type-error"
+							>{field_errors.job_type}</small
 						>
 					{/if}
 				</div>

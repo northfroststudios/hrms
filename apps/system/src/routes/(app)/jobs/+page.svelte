@@ -36,8 +36,11 @@
 </svelte:head>
 
 <section>
-	<div class="border-b p-3 lg:p-5">
-		<h2 class="font-semibold">Job Postings</h2>
+	<div class="p-5">
+		<h2 class="text-lg font-bold tracking-tight">Job Listings</h2>
+		<p class="text-sm text-gray-500">
+			Manage your job listings.
+		</p>
 	</div>
 	<div class="my-5 flex items-center justify-between px-5 py-2.5">
 		<div class="flex w-[60%] items-center gap-5 lg:w-[40%]">
@@ -76,6 +79,7 @@
 					<TableHeadCell>#</TableHeadCell>
 					<TableHeadCell>Title</TableHeadCell>
 					<TableHeadCell>Location</TableHeadCell>
+					<TableHeadCell>Type</TableHeadCell>
 					<TableHeadCell>Compensation</TableHeadCell>
 					<TableHeadCell>Date Posted</TableHeadCell>
 				</TableHead>
@@ -89,8 +93,9 @@
 							>
 							<TableBodyCell>{job.title}</TableBodyCell>
 							<TableBodyCell>{job.location}</TableBodyCell>
+							<TableBodyCell class="capitalize">{job.type}</TableBodyCell>
 							<TableBodyCell>{fromBaseForm(job.compensation)}</TableBodyCell>
-							<TableBodyCell>{getTimeAgo(job.created_at)} ago</TableBodyCell>
+							<TableBodyCell>{getTimeAgo(job.created_at)}</TableBodyCell>
 						</TableBodyRow>
 					{/each}
 				</TableBody>

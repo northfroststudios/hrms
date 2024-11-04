@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import RichText from '$lib/components/ui/rich-text.svelte';
-	import { Button, Input, Label, Spinner } from 'flowbite-svelte';
+	import { Button, Input, Label, Spinner, Select } from 'flowbite-svelte';
+	import ErrorNotice from '../../../(auth)/_components/error-notice.svelte';
 
 	let isLoading = false;
 	let description = '';
@@ -12,7 +13,8 @@
 		title: null,
 		location: null,
 		compensation: null,
-		description: null
+		description: null,
+		job_type: null
 	};
 
 	$: if (form) {
@@ -30,10 +32,25 @@
 </svelte:head>
 
 <section>
-	<div class="border-b p-3 lg:p-5">
-		<h2 class="font-semibold">Create a Job Posting</h2>
-	</div>
-	<div class="mx-auto max-w-screen-md px-8 py-10">
+	<nav class="p-5" aria-label="Breadcrumb">
+		<ol class="flex items-center space-x-2">
+			<li>
+				<a href="/jobs" class="text-sm font-medium text-gray-500 hover:text-gray-700">Jobs</a>
+			</li>
+			<li>
+				<span class="text-sm font-medium text-gray-500">/</span>
+			</li>
+			<li>
+				<span class="text-sm font-medium text-gray-500">Create Listing</span>
+			</li>
+		</ol>
+	</nav>
+	<div class="mx-auto max-w-screen-md px-8 py-8">
+		{#if message}
+			<div class="mb-5">
+				<ErrorNotice error={message} />
+			</div>
+		{/if}
 		<form
 			use:enhance={() => {
 				isLoading = true;
@@ -78,6 +95,23 @@
 						>
 					{/if}
 				</div>
+				<div>
+					<Label class="text-primary-700 space-y-2">
+						<span>Job Type</span>
+						<Select name="job_type" class="mt-1 block w-full" disabled={isLoading}>
+							<option value="fulltime">Full-time</option>
+							<option value="parttime">Part-time</option>
+							<option value="internship">Internship</option>
+							<option value="contract">Contract</option>
+							<option value="volunteer">Volunteer</option>
+						</Select>
+					</Label>
+					{#if field_errors.job_type}
+						<small class="mt-2 text-sm text-red-500" id="job_type-error"
+							>{field_errors.job_type}</small
+						>
+					{/if}
+				</div>
 			</div>
 
 			<div class="space-y-5">
@@ -97,12 +131,17 @@
 				</div>
 			</div>
 
-			<Button type="submit" disabled={isLoading} size="xs">
-				{#if isLoading}
-					<Spinner class="mr-3" size="4" color="white" />
-				{/if}
-				{isLoading ? 'Creating Listing...' : 'Create Listing'}
-			</Button>
+			<div>
+				<p class="mb-2 text-xs text-neutral-500">
+					Once you create a listing, it will be reviewed by the HR team before it is published.
+				</p>
+				<Button type="submit" disabled={isLoading} size="xs">
+					{#if isLoading}
+						<Spinner class="mr-3" size="4" color="white" />
+					{/if}
+					{isLoading ? 'Creating Listing...' : 'Create Listing'}
+				</Button>
+			</div>
 		</form>
 	</div>
 </section>

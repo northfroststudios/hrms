@@ -14,7 +14,7 @@ export async function load({ locals }) {
 	const { data: membership } = await supabase
 		.from('memberships')
 		.select('*')
-		.eq('user_id', user?.id!)
+		.eq('user_id', user?.id as string)
 		.single();
 
 	// Redirect the user to the dashboard if there's an existing membership (if the user is already in a company)
@@ -68,7 +68,7 @@ export const actions: Actions = {
 				const { data: companyData, error: companyFetchError } = await supabase
 					.from('companies')
 					.select('id')
-					.eq('user_id', user?.id!)
+					.eq('user_id', user?.id as string)
 					.single<Company>();
 
 				if (companyFetchError || !companyData) {
@@ -83,6 +83,18 @@ export const actions: Actions = {
 					is_admin: true,
 					is_active: true
 				});
+
+				const { error: activityLogError } = await supabase.from('activity_logs').insert({
+					action: 'joined the company',
+					company_id: companyData.id,
+					user_id: user?.id as string
+				});
+
+				if (activityLogError) {
+					return fail(404, {
+						message: activityLogError.message
+					});
+				}
 
 				if (membershipCreationError) {
 					return fail(404, {
